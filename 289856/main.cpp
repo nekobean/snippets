@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+using Mat = std::vector<std::vector<double>>;
+
 /**
  * @brief 1行分パースする。
  * 
@@ -23,16 +25,39 @@ std::vector<double> parse_line(const std::string &line, char delim = ',')
     return values;
 }
 
-int main(int, char **)
+/**
+ * @brief CSV を解析する。
+ * 
+ * @param path CSV ファイルのパス
+ * @return Mat 行列
+ */
+Mat parse_csv(const std::string &path)
 {
-    std::ifstream ifs("sample.csv");
+    Mat mat;
+
+    std::ifstream ifs(path);
+    if (!ifs) {
+        std::cout << "Failed to open csv path" << std::endl;
+        return mat;
+    }
     std::string line;
-    std::vector<std::vector<double>> mat;
 
     while (std::getline(ifs, line)) {
         // 1行分解析する。
         std::vector<double> values = parse_line(line);
         mat.push_back(values);
+    }
+
+    return mat;
+}
+
+int main(int, char **)
+{
+    Mat mat;
+    try {
+        mat = parse_csv("sample.csv");
+    } catch (std::exception &e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
     // 出力する。

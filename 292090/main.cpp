@@ -258,7 +258,7 @@ public:
     {
         auto end = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin_).count();
-        std::cout << "===> elapsed time: " << elapsed << "s" << std::endl;
+        std::cout << "===> elapsed time: " << elapsed << "ms" << std::endl;
     }
 
 private:
